@@ -1,0 +1,11 @@
+<h1>Expense Details</h1>
+
+<ul>
+  <% @expense_details.each do |detail| %>
+    <li>
+      <a href="/details/<%= detail.id %>">
+        <%= detail.description %>
+      </a>
+    </li>
+  <% end %>
+</ul>

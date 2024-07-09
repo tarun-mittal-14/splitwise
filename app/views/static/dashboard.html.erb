@@ -1,0 +1,74 @@
+<div id="page-content">
+  <div class="container" id = "home-container">
+    <div class="jumbotron">
+      <div class="dashboard-wrapper">
+        <aside class="side-bar-area">
+          <ul>
+            <p class="friends-list-header">FRIENDS</p>
+              <% @person.each do |user| %>
+              <li><%= link_to user.name, user_path(user)%></li>
+              <% end %>
+          </ul>
+        </aside>
+        <div class="main-area">
+          <div class="top-bar">
+            <h1 class="top-bar-title">Dashboard</h1>
+            <div class="top-bar-actions">
+              <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#expenseModal">Add an expense</button>
+              <%# <button class="btn btn-secondary" type="button">Settle up</button> %>
+            </div>
+          </div>
+          <div class="dashboard-balances">
+            <div class="balances-bar">
+              <div class="balance-block">
+                <p>total balance</p>
+                <p><%= @balance %> </p>
+              </div>
+              <div class="balance-block">
+                <p>you owe</p>
+                <p><%= @you_owe %> </p>
+              </div>
+              <div class="balance-block">
+                <p>you are owed</p>
+               <p><%= @you_are_owed %> </p>
+              </div>
+            </div>
+            <div class="dashboard-detail">
+              <div class="detail-block">
+                <h2 class="detail-title">you owe</h2>
+                  <% @you_owe_balance_list.each do |balance| %>
+                   <div class="user-container">
+                    <img class="user-img" alt="profile" src="https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png"  width="40" height="40" />
+                     <div class="user-info">
+                      <a class="friend-name" href="#"><%=@person.find(balance.lender_id).name %></a>
+                      <p>  Owes you $<%=balance.amount %> </p>
+                    </div>
+                  </div>
+                  <% end %>
+              </div>
+              <div class="detail-block">
+                <h2 class="detail-title">you are owed</h2>
+                 <% @you_owed_balance_list.each do |balance| %>
+                   <div class="user-container">
+                    <img class="user-img" alt="profile" src="https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png"  width="40" height="40" />
+                     <div class="user-info">
+                      <a class="friend-name" href="#"><%=@person.find(balance.lender_id).name %></a>
+                      <p> You are owed $<%=balance.amount %> to <%=@person.find(balance.owner_id).name %>  </p>
+                    </div>
+                  </div>
+                  <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+             <%= render 'layouts/dashboard' %>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+      </div>
+    </div>
+  </div>
+</div>

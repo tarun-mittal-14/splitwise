@@ -1,0 +1,81 @@
+<div id="expenseModal1" class="modal fade" aria-hidden="true" aria-labelledby="expenseModalLabel" tabindex="-1">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 id="expenseModalLabel" class="modal-title">Add an expense</h5>
+              <button class="btn-close" aria-label="Close" data-bs-dismiss="modal" type="button"></button>
+            </div>
+            <div class="modal-body">
+              <div class="container" id = "home-container">
+                  <div class="jumbotron">
+                      <%= form_with  url: expense_details_path, local: true do |f| %>
+                  <div>
+                      <%= f.label :description %>
+                      <%= f.text_field :description %>
+                  </div>
+
+                  <div>
+                      <%= f.label :paid_by, "Paid by" %>
+                      <%= f.collection_select :paid_by, @users, :id, :name %>
+                  </div>
+
+                  <div>
+                      <%= f.label :amount, " total amount" %>
+                      <%= f.text_field :amount %>
+                  </div>
+
+                  <div>
+                      <%= f.label :split_type %>
+                      <%= f.select :split_type, options_for_select([["Equal", "equal"], ["Unequal", "unequal"]]), {}, { id: 'split_type' } %>
+                  </div>
+
+                  <div>
+                      <%= f.label :paid_for, "Paid for users" %>
+                      <%= f.collection_select :paid_for, @users, :id, :name, {}, { multiple: true, id: 'expense_paid_for' } %>
+                  </div>
+
+                  <div id="amounts" style="display: none;">
+                      <h3>Amounts</h3>
+                      <div id="amount_fields"></div>
+                  </div>
+
+                  <div>
+                      <%= f.submit "Add Expense" %>
+                  </div>
+                  <% end %>
+                  </div>
+              </div>
+
+              <script>
+                document.addEventListener("DOMContentLoaded", function() {
+                  var splitTypeField = document.getElementById("split_type");
+                  var amountsDiv = document.getElementById("amounts");
+                  var paidForField = document.getElementById("expense_paid_for");
+                  var amountFieldsDiv = document.getElementById("amount_fields");
+
+                  function updateAmountFields() {
+                    amountFieldsDiv.innerHTML = "";
+                    if (splitTypeField.value == "unequal") {
+                      Array.from(paidForField.selectedOptions).forEach(function(option) {
+                        var userId = option.value;
+                        var userName = option.text;
+                        var inputField = document.createElement("input");
+                        inputField.type = "number";
+                        inputField.name = `expense[paid_for][${userId}]`;
+                        inputField.placeholder = `Amount for ${userName}`;
+                        amountFieldsDiv.appendChild(inputField);
+                      });
+                      amountsDiv.style.display = "block";
+                    } else {
+                      amountsDiv.style.display = "none";
+                    }
+                  }
+
+                  splitTypeField.addEventListener("change", updateAmountFields);
+                  paidForField.addEventListener("change", updateAmountFields);
+                });
+              </script>
+            </div>
+          </div>
+        </div>
+      </div>

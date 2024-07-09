@@ -1,0 +1,30 @@
+<div class="jumbotron">
+      <div class="top-bar">
+        <%# <h1 class="top-bar-title">Back to Dashboard</h1> %>
+        <%= link_to "Back to Dashboard", root_path, class: "top-bar-title"%>
+        <div class="top-bar-actions">
+          <%# <button class="btn btn-secondary" type="button">Settle up</button> %>
+        </div>
+      </div>
+      <div class="expenses-list">
+        <% @expense_list.each do |expense| %>
+          <div class="expense-item">
+              <div class="item-lhs">
+                <p><%=expense.created_at.strftime("%d %B") %></p>
+                <p><%= @expense_details.find(expense.expense_detail_id).description%></p>
+              </div>
+              <div class="item-rhs">
+                <div class="you-details">
+                  <p> <%=@person.name %> paid</p>
+                  <p>$<%=@expense_details.find(expense.expense_detail_id).amount%></p>
+                </div>
+                <div class="you-details">
+                  <p>to <%=@people.find(expense.lender_id).name %></p>
+                  <p>$<%=expense.split_amount%></p><br>
+                </div>
+              </div> 
+          </div>
+        <% end %>
+      </div>
+</div>
+

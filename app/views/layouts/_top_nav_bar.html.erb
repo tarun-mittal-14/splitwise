@@ -1,0 +1,29 @@
+<header>
+  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <div class="container-fluid">
+      <%= link_to "Splitwise Clone", "#", class: "navbar-brand" %>
+      <button class="navbar-toggler" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" type="button">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item dropdown">
+            <%= link_to destroy_user_session_path, method: :delete, class: 'dropdown-item', style: 'color: white;' do %>
+              <div class="icon-logout font-size-20 mr-2"></div>
+              Logout
+            <% end %>
+
+            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+              <li>
+                <%= link_to destroy_user_session_path, method: :delete, class: 'dropdown-item' do %>
+                  <div class="icon-logout font-size-20 mr-2"></div>
+                  Logout
+                <% end %>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</header>

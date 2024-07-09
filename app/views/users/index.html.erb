@@ -1,0 +1,35 @@
+<div class="container" id = "home-container">
+  <div class="jumbotron">
+    <div id="container">
+      <div id="user-list" style="float: left; width: 30%;">
+        <ul>
+          <p class="friends-list-header">FRIENDS</p>
+            <% @person.each do |user| %>
+            <li><%= link_to user.name, user_path(user), remote: true %></li>
+            <% end %>
+        </ul>
+      </div>
+      <div id="user-details" style="float: left; width: 70%;">
+        <div id="details-container">
+        <%= render partial: 'layouts/show', locals: { user: @current_user.id } %>
+        </div>
+      </div>
+    </div>
+  </div>
+ </div>
+
+
+  <script>
+      document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('#user-list a').forEach(link => {
+          link.addEventListener('click', (event) => {
+          event.preventDefault();
+          fetch(event.target.href)
+              .then(response => response.text())
+              .then(html => {
+              document.getElementById('details-container').innerHTML = html;
+              });
+          });
+      });
+      });
+  </script>
